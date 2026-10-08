@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ejercicio Individual - JavaScript</title>
+  <title>Bienvenida</title>
 
   <style>
     body {
@@ -49,11 +49,9 @@
 </head>
 
 <body>
-  <h1>Ejercicio Individual</h1>
-
   <div class="caja">
     <!-- El mensaje de bienvenida se muestra siempre y JavaScript lo personaliza -->
-    <p id="bienvenida">¡Bienvenido/a a la página web!</p>
+    <p id="bienvenida">¡Bienvenido/a!</p>
     <p id="dias"></p>
   </div>
 
@@ -77,13 +75,13 @@
 
       // Si el usuario cancela o deja algo vacío, queda el mensaje general
       if (!nombre || !apellido || !fechaNacimiento) {
-        bienvenida.textContent = "¡Bienvenido/a a la página web!";
+        bienvenida.textContent = "¡Bienvenido/a!";
         dias.textContent = "";
         return;
       }
 
       // EJERCICIO 1: mensaje de bienvenida
-      bienvenida.textContent = "¡Hola " + nombre + " " + apellido + ", bienvenido/a a la página web!";
+      bienvenida.textContent = "¡Bienvenido/a " + nombre + "!";
 
       // EJERCICIO 3: días vividos desde que nació
       var partes = fechaNacimiento.split("/");
