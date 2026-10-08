@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio Individual – JavaScript</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #f7e3d3 0%, #f4b6a8 100%);
+      color: #4a4a4a;
+    }
+
+    .tarjeta {
+      width: 100%;
+      max-width: 620px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(120, 60, 40, 0.18);
+      overflow: hidden;
+    }
+
+    .encabezado {
+      padding: 28px 32px;
+      background: linear-gradient(90deg, #e9a97f, #ee7b85);
+      color: #ffffff;
+    }
+    .encabezado small {
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+    .encabezado h1 { font-size: 26px; margin-top: 6px; }
+
+    .contenido { padding: 32px; }
+
+    .mensaje {
+      padding: 18px 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      line-height: 1.5;
+      font-size: 17px;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: aparecer 0.6s ease forwards;
+    }
+    .mensaje strong { color: #d4566a; }
+
+    #bienvenida { background: #fdf1ea; border-left: 5px solid #e9a97f; }
+    #dias       { background: #fdecee; border-left: 5px solid #ee7b85; animation-delay: 0.25s; }
+
+    @keyframes aparecer { to { opacity: 1; transform: translateY(0); } }
+
+    button {
+      margin-top: 8px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e9a97f, #ee7b85);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(238, 123, 133, 0.4); }
+  </style>
+</head>
+
+<body>
+  <main class="tarjeta">
+    <header class="encabezado">
+      <small>UADE · Ejercicio Individual</small>
+      <h1>Bienvenida con JavaScript</h1>
+    </header>
+
+    <section class="contenido">
+      <!-- Acá JavaScript va a escribir los mensajes -->
+      <p id="bienvenida" class="mensaje"></p>
+      <p id="dias" class="mensaje"></p>
+
+      <button id="reiniciar">Ingresar otros datos</button>
+    </section>
+  </main>
+
+  <script>
+    /* ==========================================================
+       EJERCICIO 1
+       Tres variables con datos personales y mensaje de bienvenida
+       al cargar la página.
+
+         var nombre = "Juliana";
+         var apellido = "Dominguez";
+         var fechaNacimiento = "15/03/1998";
+
+       EJERCICIO 2
+       El usuario ingresa sus propios datos con prompt().
+
+       EJERCICIO 3
+       Se muestra, luego del mensaje del ejercicio 1, cuántos días
+       vivió el usuario desde que nació.
+       ========================================================== */
+
+    // Pide un dato al usuario y vuelve a preguntar si lo deja vacío
+    function pedirDato(pregunta) {
+      var respuesta = prompt(pregunta);
+      while (respuesta !== null && respuesta.trim() === "") {
+        respuesta = prompt("El dato no puede quedar vacío. " + pregunta);
+      }
+      return respuesta === null ? null : respuesta.trim();
+    }
+
+    // Convierte "dd/mm/aaaa" en un objeto Date (devuelve null si es inválida)
+    function convertirFecha(texto) {
+      var partes = texto.split("/");
+      if (partes.length !== 3) return null;
+
+      var dia = Number(partes[0]);
+      var mes = Number(partes[1]);
+      var anio = Number(partes[2]);
+
+      var fecha = new Date(anio, mes - 1, dia);
+      var esValida =
+        fecha.getFullYear() === anio &&
+        fecha.getMonth() === mes - 1 &&
+        fecha.getDate() === dia &&
+        fecha <= new Date();
+
+      return esValida ? fecha : null;
+    }
+
+    // Cantidad de días entre la fecha de nacimiento y hoy
+    function calcularDiasVividos(nacimiento) {
+      var hoy = new Date();
+      var msPorDia = 1000 * 60 * 60 * 24;
+      var desde = Date.UTC(nacimiento.getFullYear(), nacimiento.getMonth(), nacimiento.getDate());
+      var hasta = Date.UTC(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+      return Math.floor((hasta - desde) / msPorDia);
+    }
+
+    function iniciar() {
+      // --- Ejercicio 2: el usuario ingresa sus datos ---
+      var nombre = pedirDato("Ingresá tu nombre:");
+      if (nombre === null) return;
+
+      var apellido = pedirDato("Ingresá tu apellido:");
+      if (apellido === null) return;
+
+      var fechaNacimiento = pedirDato("Ingresá tu fecha de nacimiento (dd/mm/aaaa):");
+      if (fechaNacimiento === null) return;
+
+      var fecha = convertirFecha(fechaNacimiento);
+      while (fecha === null) {
+        fechaNacimiento = pedirDato("Fecha inválida. Ingresala con el formato dd/mm/aaaa:");
+        if (fechaNacimiento === null) return;
+        fecha = convertirFecha(fechaNacimiento);
+      }
+
+      // --- Ejercicio 1: mensaje de bienvenida ---
+      var bienvenida = document.querySelector("#bienvenida");
+      bienvenida.innerHTML =
+        "¡Hola, <strong>" + nombre + " " + apellido + "</strong>! " +
+        "Te damos la bienvenida a nuestra página web.";
+
+      // --- Ejercicio 3: días vividos (se muestra después del mensaje 1) ---
+      var dias = calcularDiasVividos(fecha);
+      var mensajeDias = document.querySelector("#dias");
+      mensajeDias.innerHTML =
+        "Naciste el <strong>" + fechaNacimiento + "</strong>, " +
+        "es decir que ya viviste <strong>" + dias.toLocaleString("es-AR") + " días</strong>.";
+
+      console.log(nombre, apellido, fechaNacimiento, dias);
+    }
+
+    // Se ejecuta apenas carga la página
+    window.addEventListener("load", iniciar);
+
+    // Botón para volver a ingresar datos
+    document.querySelector("#reiniciar").addEventListener("click", iniciar);
+  </script>
+</body>
+</html>
