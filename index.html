@@ -58,14 +58,13 @@
   <button id="reiniciar">Ingresar otros datos</button>
 
   <script>
-    // EJERCICIO 1: tres variables con datos personales
-    // (versión original, antes de pedirle los datos al usuario)
+    // EJERCICIO 1
     // var nombre = "Juliana";
     // var apellido = "Perez";
     // var fechaNacimiento = "15/03/1998";
 
     function iniciar() {
-      // EJERCICIO 2: el usuario ingresa sus datos
+      // EJERCICIO 2
       var nombre = prompt("Ingrese su nombre:");
       var apellido = prompt("Ingrese su apellido:");
       var fechaNacimiento = prompt("Ingrese su fecha de nacimiento (dd/mm/aaaa):");
@@ -83,7 +82,7 @@
       // EJERCICIO 1: mensaje de bienvenida
       bienvenida.textContent = "¡Bienvenido/a " + nombre + "!";
 
-      // EJERCICIO 3: días vividos desde que nació
+      // EJERCICIO 3: días vividos desde que nacio
       var partes = fechaNacimiento.split("/");
       var dia = Number(partes[0]);
       var mes = Number(partes[1]);
@@ -101,10 +100,8 @@
       }
     }
 
-    // Se ejecuta cuando carga la página
     window.addEventListener("load", iniciar);
 
-    // Botón para volver a ingresar los datos
     document.querySelector("#reiniciar").addEventListener("click", iniciar);
   </script>
 </body>
