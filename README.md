@@ -1,1 +1,2 @@
-# Practicas
+# Practica
+#Ejercicio individual javascript
